@@ -1,0 +1,101 @@
+INPUT
+#include <iostream>
+#include <vector>
+#include <queue>
+
+using namespace std;
+
+// Class to represent a Graph using an Adjacency List
+class Graph {
+private:
+    int V; // Number of vertices
+    vector<vector<int>> adj; // Adjacency list
+
+public:
+    // Constructor
+    Graph(int vertices) {
+        V = vertices;
+        adj.resize(vertices);
+    }
+
+    // Function to add an edge to an undirected graph
+    void addEdge(int u, int v) {
+        adj[u].push_back(v);
+        adj[v].push_back(u); // Remove this line for a Directed Graph
+    }
+
+    // --- BREADTH-FIRST SEARCH (BFS) ---
+    void BFS(int startVertex) {
+        vector<bool> visited(V, false);
+        queue<int> q;
+
+        // Mark the starting node as visited and enqueue it
+        visited[startVertex] = true;
+        q.push(startVertex);
+
+        cout << "BFS Traversal: ";
+
+        while (!q.empty()) {
+            int current = q.front();
+            q.pop();
+            cout << current << " ";
+
+            // Check all adjacent neighbors of the current vertex
+            for (int neighbor : adj[current]) {
+                if (!visited[neighbor]) {
+                    visited[neighbor] = true;
+                    q.push(neighbor);
+                }
+            }
+        }
+        cout << endl;
+    }
+
+    // --- DEPTH-FIRST SEARCH (DFS) ---
+    // Helper function for DFS recursion
+    void DFSRecursive(int vertex, vector<bool>& visited) {
+        // Mark the current node as visited and print it
+        visited[vertex] = true;
+        cout << vertex << " ";
+
+        // Recur for all the vertices adjacent to this vertex
+        for (int neighbor : adj[vertex]) {
+            if (!visited[neighbor]) {
+                DFSRecursive(neighbor, visited);
+            }
+        }
+    }
+
+    // Main DFS function that initializes the visited array
+    void DFS(int startVertex) {
+        vector<bool> visited(V, false);
+        cout << "DFS Traversal: ";
+        DFSRecursive(startVertex, visited);
+        cout << endl;
+    }
+};
+
+int main() {
+    // Create a graph with 5 vertices (numbered 0 to 4)
+    Graph g(5);
+
+    // Add edges to create the graph structure
+    g.addEdge(0, 1);
+    g.addEdge(0, 2);
+    g.addEdge(1, 3);
+    g.addEdge(1, 4);
+    g.addEdge(2, 4);
+
+    // Execute Traversals
+    g.BFS(0);
+    g.DFS(0);
+
+    return 0;
+}
+
+
+OUTPUT
+BFS Traversal: 0 1 2 3 4 
+DFS Traversal: 0 1 3 4 2 
+
+  
