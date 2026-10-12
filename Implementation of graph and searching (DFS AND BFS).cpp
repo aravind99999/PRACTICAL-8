@@ -1,4 +1,4 @@
-INPUT
+//INPUT
 #include <iostream>
 #include <vector>
 #include <queue>
@@ -94,7 +94,7 @@ int main() {
 }
 
 
-OUTPUT
+//OUTPUT
 BFS Traversal: 0 1 2 3 4 
 DFS Traversal: 0 1 3 4 2 
 
